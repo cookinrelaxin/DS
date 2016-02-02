@@ -50,17 +50,27 @@ int MSS_DC(int a[],int N) {
 	}
 	return max(max(left_MSS,right_MSS),left_sum+right_sum);
 }
+
+int MSS_kadane(int a[], int N) {
+	int sum = 0, ans = 0;
+	for(int i = 0; i < N; i ++) {
+		sum += a[i];
+		if (sum < 0) sum = 0;
+		ans = max(ans,sum);
+	}
+	return ans;
+}
+		
 int main() {
 	int N = 1000;
 	int *A = new int[N]; 
 	for (int i = 0; i < N; i ++) 
 		A[i] = rand()%N - N/2;
-	print_array(A,N);
-	cout<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"<<endl;
+	// print_array(A,N);
+	// cout<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"<<endl;
 	clock_t start,elapsed;
 	start = clock();
-	//cout<<"MSS: "<<MSS_less_brute(A,N)<<endl;
-	cout<<"MSS: "<<MSS_DC(A,N)<<endl;
+	cout<<"MSS: "<<MSS_kadane(A,N)<<endl;
 	elapsed = clock() - start;
 	printf("time elapsed: %ldms\n",elapsed);
 	return 0;
