@@ -114,21 +114,40 @@ void quick_sort_helper(int a[], int start, int end){
 }
 void quick_sort(int a[], int N) {return quick_sort_helper(a,0,N-1);}
 
+void counting_sort(int a[], int N) {
+	int maximum = INT_MIN;
+	for (int i = 0; i < N; i++)
+		maximum = max(maximum,a[i]);
+	int *b = new int[maximum+1]();
+	for (int i = 0; i < N; i++)
+		b[a[i]]++;
+	int k = 0;
+	for (int i = 0; i < maximum+1; i++) {
+		int count = b[i];
+		int start_index = k;
+		while(k < start_index+count) {
+			a[k] = i;
+			k++;
+		}
+	}
+	delete [] b;
+}
 
 int main() {
 	
-	int N = 10;
+	int N = 1e8;
 	int *a = new int[N];
 	for (int i = 0; i < N; i ++) {
 		a[i] = rand()%N;
  	}
-	print_array(a,N);
+	//print_array(a,N);
 	cout<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"<<endl;
 	clock_t start,elapsed;
 	start = clock();
 	quick_sort(a,N);
+	//counting_sort(a,N);
 	elapsed = clock() - start;
-	print_array(a,N);
+	//print_array(a,N);
 	printf("time elapsed: %ldms\n",elapsed);
 	return 0;
 }
